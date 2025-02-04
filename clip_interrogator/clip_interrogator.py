@@ -130,7 +130,7 @@ class Interrogator():
 
         self._prepare_clip()
         self.artists = LabelTable(artists, "artists", self)
-        self.flavors = LabelTable(load_list(config.data_path, 'flavors.txt'), "flavors", self)
+        self.flavors = LabelTable(load_list(config.data_path, 'flavors_sfw.txt'), "flavors", self)
         self.mediums = LabelTable(load_list(config.data_path, 'mediums.txt'), "mediums", self)
         self.movements = LabelTable(load_list(config.data_path, 'movements.txt'), "movements", self)
         self.trendings = LabelTable(trending_list, "trendings", self)
