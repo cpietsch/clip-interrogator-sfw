@@ -1,6 +1,7 @@
 # clip-interrogator-sfw
 
-This is the SFW Version of the CLIP Interrogator. I removed goated words from flavors.txt by creating clip embeddings for obvious NSFW words and removing the top 20% similar words from flavors.txt. I also removed some other words that I thought were not appropriate for a general audience.
+This is the SFW Version of the CLIP Interrogator. I removed the NSFW words from flavors.txt by creating clip embeddings for obvious NSFW words and removing the top 20% similar words from flavors.txt resulting flavors-sfw.txt. I also removed some other words that I thought were not appropriate for a general audience.
+The first part of the interrogator is defined by the BLIB Model, so anything coming from the BLIB model is not modified. 
 
 ## Original README follows...
 
