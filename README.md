@@ -1,4 +1,8 @@
-# clip-interrogator
+# clip-interrogator-sfw
+
+This is the SFW Version of the CLIP Interrogator. I removed goated words from flavors.txt by creating clip embeddings for obvious NSFW words and removing the top 20% similar words from flavors.txt. I also removed some other words that I thought were not appropriate for a general audience.
+
+## Original README follows...
 
 *Want to figure out what a good prompt might be to create new images like an existing one? The **CLIP Interrogator** is here to get you answers!*
 

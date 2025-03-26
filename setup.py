@@ -4,13 +4,13 @@ import pkg_resources
 from setuptools import setup, find_packages
 
 setup(
-    name="clip-interrogator",
+    name="clip-interrogator-sfw",
     version="0.6.0",
     license='MIT',
-    author='pharmapsychotic',
-    author_email='me@pharmapsychotic.com',
-    url='https://github.com/pharmapsychotic/clip-interrogator',
-    description="Generate a prompt from an image",
+    author='chrispie',
+    author_email='cpietsch@gmail.com',
+    url='https://github.com/cpietsch/clip-interrogator-sfw',
+    description="Generate a prompt from an image (SFW version)",
     long_description=open('README.md', encoding='utf-8').read(),
     long_description_content_type="text/markdown",
     packages=find_packages(),
@@ -30,5 +30,5 @@ setup(
         'Topic :: Scientific/Engineering',
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
     ],
-    keywords=['blip','clip','prompt-engineering','stable-diffusion','text-to-image'],
+    keywords=['blip','clip','prompt-engineering','stable-diffusion','text-to-image', 'sfw'],
 )
