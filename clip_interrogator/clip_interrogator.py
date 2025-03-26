@@ -108,7 +108,8 @@ class Interrogator():
                 precision='fp16' if config.device == 'cuda' else 'fp32',
                 device=config.device,
                 jit=False,
-                cache_dir=config.clip_model_path
+                cache_dir=config.clip_model_path,
+                quick_gelu=True
             )
             self.clip_model.eval()
         else:
@@ -197,7 +198,7 @@ class Interrogator():
     def image_to_features(self, image: Image) -> torch.Tensor:
         self._prepare_clip()
         images = self.clip_preprocess(image).unsqueeze(0).to(self.device)
-        with torch.no_grad(), torch.cuda.amp.autocast():
+        with torch.no_grad(), torch.amp.autocast('cuda'):
             image_features = self.clip_model.encode_image(images)
             image_features /= image_features.norm(dim=-1, keepdim=True)
         return image_features
@@ -257,7 +258,7 @@ class Interrogator():
     def rank_top(self, image_features: torch.Tensor, text_array: List[str], reverse: bool=False) -> str:
         self._prepare_clip()
         text_tokens = self.tokenize([text for text in text_array]).to(self.device)
-        with torch.no_grad(), torch.cuda.amp.autocast():
+        with torch.no_grad(), torch.amp.autocast('cuda'):
             text_features = self.clip_model.encode_text(text_tokens)
             text_features /= text_features.norm(dim=-1, keepdim=True)
             similarity = text_features @ image_features.T
@@ -268,7 +269,7 @@ class Interrogator():
     def similarity(self, image_features: torch.Tensor, text: str) -> float:
         self._prepare_clip()
         text_tokens = self.tokenize([text]).to(self.device)
-        with torch.no_grad(), torch.cuda.amp.autocast():
+        with torch.no_grad(), torch.amp.autocast('cuda'):
             text_features = self.clip_model.encode_text(text_tokens)
             text_features /= text_features.norm(dim=-1, keepdim=True)
             similarity = text_features @ image_features.T
@@ -277,7 +278,7 @@ class Interrogator():
     def similarities(self, image_features: torch.Tensor, text_array: List[str]) -> List[float]:
         self._prepare_clip()
         text_tokens = self.tokenize([text for text in text_array]).to(self.device)
-        with torch.no_grad(), torch.cuda.amp.autocast():
+        with torch.no_grad(), torch.amp.autocast('cuda'):
             text_features = self.clip_model.encode_text(text_tokens)
             text_features /= text_features.norm(dim=-1, keepdim=True)
             similarity = text_features @ image_features.T
@@ -319,7 +320,7 @@ class LabelTable():
             chunks = np.array_split(self.labels, max(1, len(self.labels)/config.chunk_size))
             for chunk in tqdm(chunks, desc=f"Preprocessing {desc}" if desc else None, disable=self.config.quiet):
                 text_tokens = self.tokenize(chunk).to(self.device)
-                with torch.no_grad(), torch.cuda.amp.autocast():
+                with torch.no_grad(), torch.amp.autocast('cuda'):
                     text_features = clip_model.encode_text(text_tokens)
                     text_features /= text_features.norm(dim=-1, keepdim=True)
                     text_features = text_features.half().cpu().numpy()
@@ -373,7 +374,7 @@ class LabelTable():
     def _rank(self, image_features: torch.Tensor, text_embeds: torch.Tensor, top_count: int=1, reverse: bool=False) -> str:
         top_count = min(top_count, len(text_embeds))
         text_embeds = torch.stack([torch.from_numpy(t) for t in text_embeds]).to(self.device)
-        with torch.cuda.amp.autocast():
+        with torch.amp.autocast('cuda'):
             similarity = image_features @ text_embeds.T
             if reverse:
                 similarity = -similarity
