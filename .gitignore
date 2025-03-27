@@ -9,3 +9,5 @@ clip_interrogator.egg-info/
 dist/
 venv/
 filter/sim
+build/
+clip_interrogator_sfw.egg-info/*
