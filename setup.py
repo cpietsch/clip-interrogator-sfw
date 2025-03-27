@@ -5,9 +5,9 @@ from setuptools import setup, find_packages
 
 setup(
     name="clip-interrogator-sfw",
-    version="0.6.0",
+    version="0.6.1",
     license='MIT',
-    author='chrispie',
+    author='pharmapsychotic, chrispie',
     author_email='cpietsch@gmail.com',
     url='https://github.com/cpietsch/clip-interrogator-sfw',
     description="Generate a prompt from an image (SFW version)",

@@ -108,8 +108,7 @@ class Interrogator():
                 precision='fp16' if config.device == 'cuda' else 'fp32',
                 device=config.device,
                 jit=False,
-                cache_dir=config.clip_model_path,
-                quick_gelu=True
+                cache_dir=config.clip_model_path
             )
             self.clip_model.eval()
         else:
